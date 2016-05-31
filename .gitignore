@@ -1,0 +1,63 @@
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+
+# Visual Studio
+*.sln
+*.ncb
+*.vcproj
+
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+
+# Generated
+revision.h
+
+
+
+#	CMake
+CMakeCache.txt
+CMakeFiles
+cmake_install.cmake
+cmake_uninstall.cmake
+*.dir/
+assimp-config.cmake
+assimp-config-version.cmake
+
+
+#
+*~
+
+main	# sample binary files
+#
+build
+Proj
+port/android/obj
+port/android/libs
+*.tar.*
