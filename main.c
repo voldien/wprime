@@ -21,11 +21,13 @@
 #include<getopt.h>
 
 
-/**/
+/*	solving (p -1)! + 1 === 0 mod p => p is a prime number. */
 unsigned long long int compute_wilson_decimal_prime(unsigned long long int p){
 	unsigned long long int i = 1;
 	unsigned long long int tmp = 1;
+
 	for( ; i < p; i++){
+		/*	(tmp * i) mod p === r*/
 		tmp = (tmp * i) % p;
 	}
 	return (tmp + 1) % p;
