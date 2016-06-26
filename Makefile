@@ -8,7 +8,7 @@ vpath %.c .
 vpath %.o .
 
 objects = $(notdir $(subst .c,.o,$(wildcard *.c)))
-CFLAGS := -O3
+CFLAGS := -O2
 
 all : $(TARGET)
 	@echo "compiled" $(TARGET)
