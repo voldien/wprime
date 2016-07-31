@@ -1,6 +1,6 @@
 /**
+	wprime is software for computing if a natural number is a prime number.
     Copyright (C) 2015  Valdemar Lindberg
-
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -18,6 +18,7 @@
 */
 #include<stdio.h>
 #include<stdlib.h>
+#include<unistd.h>
 #include<getopt.h>
 
 
@@ -35,13 +36,15 @@ unsigned long long int compute_wilson_decimal_prime(unsigned long long int p){
 }
 
 int main(int argc, char** argv){
-	unsigned long long int isPrime = 1;
-	unsigned long long int tmp;
-	unsigned int c;
-	unsigned int base = 10;
-	unsigned int human = 0;
+	char buf[1024];
+	unsigned long long int isPrime = 1;	/**/
+	unsigned long long int tmp;			/**/
+	unsigned int c;						/**/
+	unsigned int base = 10;				/*	number base.	*/
+	unsigned int human = 0;				/*	readable for human.	*/
 
-	if(argc <= 1){
+	/*	requires either at least an argument or stdin pipe */
+	if(argc <= 1 && isatty(STDERR_FILENO) == 0){
 		return EXIT_FAILURE;
 	}
 
@@ -54,43 +57,54 @@ int main(int argc, char** argv){
 		case 'h':
 			human = 1;
 			break;
-		case 'b':
+		case 'b':	/*	number base.	*/
 			if(optarg){
 				base = atoi(optarg);
 			}
 			break;
-		case 'o':
+		case 'o':	/*	octal*/
 			if(optarg){
 				tmp = strtoll(optarg, NULL, 8);
 
 			}
 			break;
-
-		case 'H':
+		case 'H':	/*	Hexadecimal	*/
 			if(optarg){
 				tmp = strtoll(optarg, NULL, 16);
-
 			}
 			break;
 		case 'd':
 		default:
-			if(optarg){
+			if(optarg){	/*	Decimal in base 10.	*/
 				tmp = strtoll(optarg, NULL, 10);
 			}
+			break;
+		case '?':
+			fprintf(stderr,"Invalid flag \'%c\'.\n", optopt);
+			return EXIT_FAILURE;
 			break;
 		}
 
 	}
+
+
+	/*	read from pipe input.	*/
+	if(read(STDIN_FILENO, buf, sizeof(buf)) > 0 ){
+		tmp = strtoll(buf, NULL, base);
+	}
+	/*	read from argument without flag.	*/
 	if(optind < argc){
 		tmp = strtoll(argv[optind], NULL, base);
 	}
 
-	/*	compute prime.*/
+	/*	compute prime.	*/
 	isPrime = compute_wilson_decimal_prime(tmp);
-	if(!human)
-		printf("%d\n", isPrime == 0 ? 0 : 1);
-	else
+	if(!human){
+		printf("%d\n", isPrime == 0 ? 1 : 0);
+	}
+	else{
 		printf("%lld is prime : %s\n", tmp,  isPrime == 0 ? "true" : "false");
+	}
 
 	return EXIT_SUCCESS;
 }
