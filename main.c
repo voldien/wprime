@@ -1,6 +1,6 @@
 /**
 	wprime is software for computing if a natural number is a prime number.
-    Copyright (C) 2015  Valdemar Lindberg
+	Copyright (C) 2015  Valdemar Lindberg
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -20,7 +20,6 @@
 #include<stdlib.h>
 #include<unistd.h>
 #include<getopt.h>
-
 
 /*	solving (p -1)! + 1 === 0 mod p => p is a prime number. */
 unsigned long long int compute_wilson_decimal_prime(unsigned long long int p){
@@ -42,13 +41,17 @@ int main(int argc, char** argv){
 	unsigned int c;						/**/
 	unsigned int base = 10;				/*	number base.	*/
 	unsigned int human = 0;				/*	readable for human.	*/
+	unsigned int isPipe = 0;
 
 	/*	requires either at least an argument or stdin pipe */
-	if(argc <= 1 && isatty(STDERR_FILENO) == 0){
+	isPipe = isatty(STDIN_FILENO) == 0;
+	if(argc <= 1 && !isPipe){
+		fprintf(stderr, "No input.\n");
 		return EXIT_FAILURE;
 	}
 
-	while(( c = getopt(argc, argv, ":d:vH:o:b:h")) != EOF){
+	/**/
+	while(( c = getopt(argc, argv, "dvHob:h")) != EOF){
 		switch(c){
 		case 'v':
 			printf("version 1.0.0. \n");
@@ -63,39 +66,42 @@ int main(int argc, char** argv){
 			}
 			break;
 		case 'o':	/*	octal*/
-			if(optarg){
-				tmp = strtoll(optarg, NULL, 8);
-
-			}
+				base = 8;
 			break;
 		case 'H':	/*	Hexadecimal	*/
-			if(optarg){
-				tmp = strtoll(optarg, NULL, 16);
-			}
+				base = 16;
 			break;
-		case 'd':
-		default:
-			if(optarg){	/*	Decimal in base 10.	*/
-				tmp = strtoll(optarg, NULL, 10);
-			}
+		case 'd':	/*	Decimal in base 10.	*/
+				base = 10;
 			break;
 		case '?':
-			fprintf(stderr,"Invalid flag \'%c\'.\n", optopt);
-			return EXIT_FAILURE;
 			break;
+		default:
+			fprintf(stderr,"Invalid flag \'%c\'.\n", optopt);
+			//return EXIT_FAILURE;
 		}
 
 	}
 
-
-	/*	read from pipe input.	*/
-	if(read(STDIN_FILENO, buf, sizeof(buf)) > 0 ){
-		tmp = strtoll(buf, NULL, base);
-	}
 	/*	read from argument without flag.	*/
 	if(optind < argc){
 		tmp = strtoll(argv[optind], NULL, base);
 	}
+	else{
+		/*	read from pipe input.	*/
+		if(isPipe){
+			if(read(fileno(stdin), buf, sizeof(buf)) > 0 ){
+				tmp = strtoll(buf, NULL, base);
+			}
+		}else
+			return EXIT_FAILURE;
+	}
+
+	/*	can divide by 0.	*/
+	if(tmp == 0){
+		return EXIT_FAILURE;
+	}
+
 
 	/*	compute prime.	*/
 	isPrime = compute_wilson_decimal_prime(tmp);
