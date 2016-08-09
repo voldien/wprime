@@ -51,12 +51,16 @@ int main(int argc, char** argv){
 	}
 
 	/**/
-	while(( c = getopt(argc, argv, "dvHob:h")) != EOF){
+	while(( c = getopt(argc, argv, "smdvHob:h")) != EOF){
 		switch(c){
 		case 'v':
 			printf("version 1.0.0. \n");
 			return EXIT_SUCCESS;
-		break;
+		case 'm':
+			return EXIT_SUCCESS;
+		case 's':
+			printf("%ld\n", sizeof(unsigned long long int) * 8);
+			return EXIT_SUCCESS;
 		case 'h':
 			human = 1;
 			break;
