@@ -21,10 +21,26 @@
 #include<unistd.h>
 #include<getopt.h>
 
-/*	solving (p -1)! + 1 === 0 mod p => p is a prime number. */
+#ifndef WPRIME_MAJOR_VERSION
+	#define WPRIME_MAJOR_VERSION 1
+#endif
+
+#ifndef WPRIME_MINOR_VERSION
+	#define WPRIME_MINOR_VERSION 0
+#endif
+
+#ifndef WPRIME_REVISION_VERSION
+	#define WPRIME_REVISION_VERSION 0
+#endif
+
+
+/**
+ *	solving (p -1)! + 1 === 0 mod p => p is a prime number.
+ */
 unsigned long long int compute_wilson_decimal_prime(unsigned long long int p){
 	unsigned long long int i = 1;
 	unsigned long long int tmp = 1;
+
 
 	for( ; i < p; i++){
 		/*	(tmp * i) mod p === r*/
@@ -34,16 +50,19 @@ unsigned long long int compute_wilson_decimal_prime(unsigned long long int p){
 	return (tmp + 1) % p;
 }
 
+
+
 int main(int argc, char** argv){
-	char buf[1024];
-	unsigned long long int isPrime = 1;	/**/
-	unsigned long long int tmp;			/**/
-	unsigned int c;						/**/
+	char buf[1024];						/*	*/
+	unsigned long long int isPrime = 1;	/*	*/
+	unsigned long long int tmp;			/*	*/
+	unsigned int c;						/*	getopt character.	*/
 	unsigned int base = 10;				/*	number base.	*/
 	unsigned int human = 0;				/*	readable for human.	*/
 	unsigned int isPipe = 0;
+	unsigned long long int maxp;
 
-	/*	requires either at least an argument or stdin pipe */
+	/*	requires either at least an argument or regular piping. */
 	isPipe = isatty(STDIN_FILENO) == 0;
 	if(argc <= 1 && !isPipe){
 		fprintf(stderr, "No input.\n");
@@ -54,9 +73,12 @@ int main(int argc, char** argv){
 	while(( c = getopt(argc, argv, "smdvHob:h")) != EOF){
 		switch(c){
 		case 'v':
-			printf("version 1.0.0. \n");
+			printf("version %d.%d.%d\n", WPRIME_MAJOR_VERSION, WPRIME_MINOR_VERSION, WPRIME_REVISION_VERSION);
 			return EXIT_SUCCESS;
-		case 'm':
+		case 'm':	/*	max = 2^(bitesize/2) - 1	*/
+			maxp = 1;
+			maxp = (maxp << (sizeof(tmp) * 4)) - 1;
+			printf("%ld\n", maxp);
 			return EXIT_SUCCESS;
 		case 's':
 			printf("%ld\n", sizeof(unsigned long long int) * 8);
@@ -94,7 +116,7 @@ int main(int argc, char** argv){
 	else{
 		/*	read from pipe input.	*/
 		if(isPipe){
-			if(read(fileno(stdin), buf, sizeof(buf)) > 0 ){
+			if(read(STDIN_FILENO, buf, sizeof(buf)) > 0 ){
 				tmp = strtoll(buf, NULL, base);
 			}
 		}else
