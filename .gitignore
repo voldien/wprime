@@ -51,13 +51,18 @@ assimp-config.cmake
 assimp-config-version.cmake
 
 
-#
+#	gedit temp file.
 *~
 
-main	# sample binary files
-#
-build
-Proj
-port/android/obj
-port/android/libs
-*.tar.*
+## Core latex/pdflatex auxiliary files:
+*.aux
+*.lof
+*.log
+*.lot
+*.fls
+*.out
+*.toc
+*.fmt
+*.fot
+*.cb
+*.cb2
