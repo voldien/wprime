@@ -53,23 +53,23 @@ unsigned long long int compute_wilson_decimal_prime(unsigned long long int p){
 
 
 int main(int argc, char** argv){
-	char buf[1024];						/*	*/
+	char buf[1024];                         /*	*/
 	unsigned long long int isPrime = 1;	/*	*/
-	unsigned long long int tmp;			/*	*/
-	unsigned int c;						/*	getopt character.	*/
-	unsigned int base = 10;				/*	number base.	*/
-	unsigned int human = 0;				/*	readable for human.	*/
-	unsigned int isPipe = 0;
-	unsigned long long int maxp;
+	unsigned long long int tmp;             /*	*/
+	unsigned int c;                         /*	getopt character.	*/
+	unsigned int base = 10;                 /*	number base.	*/
+	unsigned int human = 0;                 /*	readable for human.	*/
+	unsigned int isPipe = 0;                /*	*/
+	unsigned long long int maxp;            /*	*/
 
-	/*	requires either at least an argument or regular piping. */
+	/*	Requires either at least an argument or regular piping. */
 	isPipe = isatty(STDIN_FILENO) == 0;
 	if(argc <= 1 && !isPipe){
 		fprintf(stderr, "No input.\n");
 		return EXIT_FAILURE;
 	}
 
-	/**/
+	/*	*/
 	while(( c = getopt(argc, argv, "smdvHob:h")) != EOF){
 		switch(c){
 		case 'v':
