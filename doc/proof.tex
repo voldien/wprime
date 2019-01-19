@@ -65,6 +65,7 @@
 
 \begin{document}
 
+\pagenumbering{gobble} % Turn off page numbering
 \begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
 	
 	\raggedleft % Right align the title page
@@ -73,8 +74,8 @@
 	\hspace{0.05\textwidth} % Whitespace between the vertical line and title page text
 	\parbox[b]{0.75\textwidth}{ % Paragraph box for holding the title page text, adjust the width to move the title page left or right on the page
 		
-		{\Huge\bfseries WPrime Space Complexity\\  Reduction \\[0.5\baselineskip] Mathematical Proof}\\[2\baselineskip] % Title
-		{\large\textit{Solved wprime with lower space complexity}}\\[4\baselineskip] % Subtitle or further description
+		{\Huge\bfseries WPrime Space Complexity\\  Reduction}\\[2\baselineskip] % Title
+		{\large\textit{Mathematical Proof for solving wprime with lower space complexity}}\\[4\baselineskip] % Subtitle or further description
 		{\Large\textsc{Valdemar Lindberg}} % Author name, lower case for consistent small caps
 		
 		\vspace{0.5\textheight} % Whitespace between the title block and the publisher
@@ -85,7 +86,7 @@
 \end{titlepage}
 
 \abstract{
-The paper goes through how the \emph{Wilsom's theorem} on binary system can be solved using the ALU on the processing units with a lower space complexity in respect to the space complexity of factorial numbers, $\O(n!)$. Where the space complexity can be reduced by using common supported instruction such as integer modular arithmetic and integer multiplication.
+\emph{Wilsom's theorem} on binary systems can be solved using the ALU on the processing units with a lower space complexity in respect to the space complexity of factorial numbers, $\O(n!)$. Furthermore, the space complexity can be reduced by using common supported instruction such as integer modular, integer multiplication and integer addition.
 }
 \newpage
 \pagenumbering{gobble} % Turn off page numbering
@@ -102,22 +103,22 @@ This paper is about proving that \emph{modular arithmetic} can be used in order 
 
 
 \subsection{Limitation}
-This paper will only cover the mathematical proof, theorems and lemma for which is required by the proofs. Where the code soluation will be presented as\emph{pseudo code} for the parallel \ref{alg:parallel} and serial \ref{alg:serial} computation solution. The source code in \emph{C} can be found at \emph{github}, serial\cite{wprime} and for parallel\cite{clwprime}.
+This paper will only cover the mathematical proof, theorems and lemma for which is required by the proofs. Where the code soluations will be presented as\emph{pseudo code} for the parallel (\ref{alg:parallel}) and serial (\ref{alg:serial}) as computation solution. The source code in \emph{C} can be found at \emph{github}, serial\cite{wprime} and for parallel\cite{clwprime}.
 
 
 \subsection{Purpose}
-This research was done in order to find a faster way for determine if a number is prime with \emph{Wilsom's theorem}. Because the biggest problem with \emph{Wilsom's therorem} is that it requires to compute big factorial numbers. Where computers have fixed sized registers for storing and computing the arithmetic with the ALU (Arithmetic logic unit). It would otherwise require big numbers and CPU hardware does not support this natively, which requires software emulated arithmetic, which would be very expensive.
+This research was done in order to find a faster way for determine if a number is prime with \emph{Wilsom's theorem}. Because the biggest problem with \emph{Wilsom's therorem} is that it requires to compute big factorial numbers. Where computers have fixed sized registers for storing and computing the arithmetic with the integrated ALU (Arithmetic logic unit). It would otherwise require big numbers and CPU hardware does not support this natively, which requires software emulated arithmetic operations, which would increase computation time.
 
 \section{Mathematical Background}
-The following sub sections will covers the mathematical theory required in order to perform the proof at page \ref{sec:proof}. Where it will present each of the definitions, theorems.
+The following sub sections will covers the mathematical theory required in order to perform the proof at page \ref{sec:proof}. Where it will present each of the definitions, theorems and lemmas.
 %	Cover basic of prime number and its definitions.
 
 \subsection{Prime Number}
-Because The \emph{Wilsom's Theorem} is about solving if a number is prime or not. That yield that the definition of prime number is the first definition to cover, see definition \ref{def:prime}.
+Because The \emph{Wilsom's Theorem} is about solving if a number is a prime. That yield that the definition of prime number is the first definition to cover, see Definition \ref{def:prime}.
 
 \begin{definition}{Prime Number}\label{def:prime}
 \\
-A \emph{prime number} is a number that is only divisible by one and itself. That includes all natural numbers excluding 1 and 0. See equation \ref{equ:prime} for the subset for which a prime can exist.
+A \emph{prime number} is a number that is only divisible by one and itself. That includes all natural numbers excluding 1 and 0. See equation \ref{equ:prime} for the subset for which a prime may exist.
 \begin{equation}
 \mathbb{N}_{p} = \{2,3,4,\cdots,n-1,n\}
 \end{equation}\label{equ:prime}
@@ -135,30 +136,45 @@ c = p_0 p_1 p_2 \cdots p_{n-1} p_{n}, c \in \mathbb{N}^{+}
 Where c is the composite number whereas $p_{i} \in \mathbb{N}_{p}$.
 \end{definition}
 
-For example $120 = 2 \cdot 2 \cdot 3 \cdot 2 \cdot 2 \cdot 5$, $15 = 3 \cdot 5$ and are both composite number by the definition \ref{def:comp}. Because each factor in the composite number is a prime number. However, if 1 were be included then there would exist infinitely many expression for a composite number could be expressed.
+For example, $120 = 2 \cdot 2 \cdot 3 \cdot 2 \cdot 2 \cdot 5$, $15 = 3 \cdot 5$ are both composite numbers by the definition \ref{def:comp}. Because each factor in the composite number is a prime number. However, if number one were be included, then there would exist infinitely many expression for a composite number could be expressed. Additionally, factoring one will never alters the value.
 
 %
 \subsection{Modular Arithmetic}\label{sec:mod}
-Modular arithmetic is mathematical model for which many people has been tough in school and are using daily, but is however, never explicitly told about. This is associated with the clock, which many people know how to compute and use. The clock goes from $1,2,3,\cdots,11,12$ and goes back to $1$ and continues like that for all eternity. \textit{Modular arithmetic} works similar. See following definition of modular arithmetic \ref{def:modular}.
+Modular arithmetic is mathematical model for which many people has been tough in school and are using daily. However, are commonly never explicitly told about. This is associated with the clock, which many people know how to compute and use. The clock goes from $1,2,3,\cdots,11,12$ and goes back to $1$ and continues like that for all eternity. \textit{Modular arithmetic} works similar. See following definition of modular arithmetic \ref{def:modular}.
 
 \begin{definition}{Modular Arithmetic}\label{def:modular}
 \\
-Modular arithmetic is computation of the remainder of a fraction rather than the while quotation of the fraction.
+Modular arithmetic is the computation of the remainder of a fraction rather than the quotation of a fraction.
 \begin{equation}
 qp +r \equiv r \Mod{q}, \text{where} q, p, r \in \mathbb{N}
 \end{equation}
 \end{definition}
 
-If we were to express the clock with modular arithmetic based on the definition \ref{def:modular}. We would get the following expression:
+If we were to express the clock with modular arithmetic based on the Definition \ref{def:modular}. We would get the following expression:
 \begin{equation}\label{equ:clock}
 h\Mod{12} + 1, \text{where \emph{h} is the hour.}
 \end{equation}
 
 %s
-The adding of \emph{one} on the right side was done in order to solve the problem that $h mod 12$ alone will circle through the set $\{0,1,2,3,\cdots,10,11\}$. However, By adding one will offset to each number and yield the set $\{1,2,3,4,\cdots,11,12\}$.
+The adding of \emph{one} on the right side was done in order to solve the problem that $h mod 12$ alone will circle through the set $\{0,1,2,3,\cdots,10,11\}$. However, By adding one will offset to each number and yield the set $\{1,2,3,4,\cdots,11,12\}$, which the clock uses.
 
 %
-Modular arithmetic is also associated with division. Because for example $23 \mod 5$ is the equivalence with $\frac{23}{5} + \frac{r}{5} = rqp + r$. This means that the modular arithmetic is the \emph{carry} in computer terms and th e \emph{remainder} in mathematics terms, which has a signification amount of application in computer software and mathematics.
+Modular arithmetic is also associated with division. Because for example $23\Mod{5}$ is the equivalence with $\frac{23}{5} + \frac{r}{5} = rqp + r$. This means that the modular arithmetic is the \emph{carry} in computer terms and the \emph{remainder} in mathematics terms, which has a signification amount of application in computer software and mathematics.
+
+%
+An important lemma is required for the proof to work, which is the basis for how the reduce space complexity is deduced from, see following lemma:
+\begin{lemma}{Expand Modular Factor}label{lem:modprodgen}
+\\
+if $c_0 \in \mathbb{Z}$ is composite number and $p \in \mathbb{N}^{+}$. The composite number with modular arithmetic \ref{def:modular} can be expression as followed:
+\begin{equation}\
+\begin{split}
+c_0 \Mod{p} &= (f_0 \cdot f_1 \cdot f_2 \cdots f_{n-2} \cdot f_{n-1} ) \Mod{p} \\
+\iff \\
+c_0 \Mod{p} &= f_0 \Mod{p} \cdot f_1 \Mod{p} \cdot f_2 \Mod{p} \cdots f_{n-2} \Mod{p} \cdot f_{n-1} \Mod{p}
+\end{split}
+\end{equation}
+%If P is a composite number. It can be written as \ref{equ:modprodgen}
+\end{lemma}
 
 \subsection{Wilsom's Theorem}
 
@@ -168,52 +184,35 @@ A number $\text{p} \in \mathbb{N}$ can be determine if its a prime number by usi
 \begin{equation}
 (p - 1)! + 1 \equiv 0\pmod p
 \end{equation}
-Where if no remainders defined by the modular arithmetic definition\ref{def:modular} implies that $p$ is prime number.
+Where if no remainders defined by the modular arithmetic Definition \ref{def:modular} implies that $p$ is a prime number.
 \end{theorem}
 
-By the theorem in \ref{the:wilsomprime}, this would means that $(p-1)! + 1 $ \emph{must} be divisible by $p$ in order for the \emph{p} to be prime accordingly the modular arithmetic definitions \ref{def:modular}. It can also be expressed as followed:
+By the theorem in \ref{the:wilsomprime}, this would mean that $(p-1)! + 1 $ \emph{must} be divisible by $p$ in order for the \emph{p} to be prime accordingly the modular arithmetic definitions \ref{def:modular}. It can also be expressed as followed:
 \begin{equation}
 p | (p - 1)! + 1 \implies \text{p is prime.}
 \end{equation}
 
 % Modular multiplication is assoicative
 \section{Proof}\label{sec:proof}
-The proof section contains two proofs. Where the first one is about the \emph{space complexity}, and the second for the proving that the \emph{Wilsom's theorem} can be solved with parallel computation.
-
-%
-\begin{lemma}{Expand Modular Factor}
-\\
-if $c_0 \in \mathbb{Z}$ is composite number and $p \in \mathbb{N}$. The composite number with modular arithmetic\ref{def:modular} can be expression as followed:
-\begin{equation}
-\begin{split}
-c_0 \Mod{p} &= (f_0 \cdot f_1 \cdot f_2 \cdots f_{n-2} \cdot f_{n-1} ) \Mod{p} \\
-\iff \\
-c_0 \Mod{p} &= (f_0 \Mod{p} \cdot f_1 \Mod{p} \cdot f_2 \Mod{p} \cdots f_{n-2} \Mod{p} \cdot f_{n-1} \Mod{p} )
-\end{split}
-\end{equation}\label{equ:modprodgen}
-
-If P is a composite number. It can be written as \ref{equ:modprodgen}
-\end{lemma}
-
+The proof section contains two proofs. Where the first one is about the \emph{space complexity}, and the second for the proving that the \emph{Wilsom's theorem} can be solved in parallel.
 
 \subsection{Space Complexity}\label{pro:spacecomplexity}
-The following proof is about proving that \emph{modular arithmetic}\ref{sec:mod} can be used in order to subdivide the factorial expression in order to reduce the size of the number, this is because a factorial number increases in size incredibly quickly.
+The following proof is about proving that \emph{modular arithmetic} \ref{sec:mod} can be used in order to subdivide the factorial expression in order to reduce the size of the number, this is because a factorial number increases in size incredibly quickly with $\theta(n!)$. The straight forward approach for solving $n$ being prime is as followed.
 
-%For computing if $p in \mathbb{N}$ is a prime, we're going to utilize the  Wilsome's theorem prime, that has been proven \ref{•}
-
-%
-The straight forward approach for solving $n$ being prime is as followed
-\begin{lemma}
+\begin{corollary}{}
+Wilsom prime can simplified as a product of all integers from p - 1 and additions with one, based on the Lemma \ref{lem:modprodgen}.
 \begin{equation}\label{equ:forward}
-\Pi_{i = 1}^{p-1} i + 1 \equiv 0 \pmod p
+ \left( \prod_{i = 1}^{p-1} i \right) + 1 \equiv 0 \pmod p
 \end{equation}
-\end{lemma}
 
-This equation has the problem that the product will increase in size quickly. This becomes a problem for most CPU (central computation unit), because the registers responsible for storing storing the values as a binary representation of the whole numbers. Because as of the time of this paper CPU's has support for \emph{ALU}(Arithmetic logic unit) for up to 128 bit numbers. That is say $10^{38}$. However this register would been been overflowed, using equation \ref{equ:forward} before $p$ reachies $36$. That implies it would only be able to solve for $p < 35$.
+\end{corollary}
+
+
+% TODO relocate to rationale
+This equation has the problem that the product will increase in size rapidly. This becomes a problem for most CPU (central computation unit), because the registers responsible for storing storing the values as a binary representation of the whole numbers. Because as of the time of this paper CPU's has support for \emph{ALU}(Arithmetic logic unit) for up to 128 bit numbers. That is say $10^{38}$. However this register would been been overflowed, using equation \ref{equ:forward} before $p$ reaches $36$. That implies it would only be able to solve for $p < 35$.
 
 \begin{proof}
 Given that \ref{the:wilsomprime} is true. We can use modular definition \ref{def:modular} to rewrite \emph{Wilsom's theorem} to the following, see equation \ref{equ:pmod}.
-
 %
 \begin{equation}\label{equ:pmod}
 p = ap + r \Mod{p}
@@ -221,115 +220,80 @@ p = ap + r \Mod{p}
 
 %
 \begin{equation}\label{equ:}
-\theta(p) = \Pi_{i = 1}^{p} i\mod(p)==
+\begin{split}
+\theta(p) = \Pi_{i = 1}^{p} i\mod(p)	\!
+\equiv									\\
 p_1mod(p)\cdot p_2mod(p) \cdot p_3mod(p) \cdot\cdots\cdot
+\end{split}
 \end{equation}
 
 %
 \begin{equation}
-x\equiv ymodz, x,c,z \in \mathbb{N}_{0}
+\begin{split}
+x\equiv ymodz, x,c,z \in \mathbb{N}_{0} \\
 x\equiv (y + kz)mod z,						
 (p -1)!+1\equiv0modp
 (p-1)!+1\equiv(0+kp)modp
 \equiv (p-1)!+1\equiv 0 mod p
+\end{split}
 \end{equation}
 
 \end{proof}
 
 % 
-\subsection{Parallel Computation}
+\subsection{Parallel}
 The following proof is in regard of enabling parallel computation when solving if $n \in \mathbb{N}$ is a prime with \emph{Wilsom's Theorem} \ref{the:wilsomprime}. This is done by subdivide product into multiple sub products.
 
 \begin{equation}
 e_{1}^{1}
 \end{equation}
 
+%
+\subsection{Time Complexity}
+\subsubsection{Serial}\label{sec:time:serial}
+The serial time computation is the most straight forward. Because for any $p \in{N}^+$ It will have to perform at least $p - 1$ iteration, as stated in Theorem \ref{the:wilsomprime}. This will require at least a multiple, modular operation and addition for each iteration. Thus the time complexity can be derived as $\theta(n)$.
+
+\subsubsection{Parallel}
+The parallel time computation is not as straight forward as the serial complexity. Because of the two phases in its process and an unknown variable of number of subregion. Additional subregions will increase the time complexity defined by the Serial \ref{sec:time:serial}. Because each subregions has to merge in the second phase. Furthermore, the number of subregions that be computed at the same time may vary. However with the assumption that all subregion are computed simultaneously.
 
 %
-\subsubsection{Time Complexity}
-The program used in order to perform the analysis are the \emph{wprime} and \emph{clwprime} programs. Where the \emph{wprime} solves if p is prime in serial, whereas \emph{clwprime} uses \emph{OpenCL} for parallel computation.
-The elapse time for each execution were saved to a text file.
+Phase 1 time complexity yields $\frac{n}{s}$. Because each region is computed simultaneous. Additionally, $\frac{n}{s}$ is the number of elements that has to be computed with serial    on each parallel computation. Thus time complexity is $\theta(\frac{n}{s})$
 
 %
-\begin{lstlisting}[language=bash,
-	caption={Source code for generating graph data.},label={lst:graphdata},basicstyle=\ttfamily,
-%	basicstyle=\tiny,
-	tabsize=2,
-	showstringspaces=false,
-	commentstyle=\color{red},
-	keywordstyle=\color{blue}]
-#!/bin/bash
+Phase 2 time complexity yields to $s$ since it is the number of elements that has to be processed with the serial computation.
 
-proc=wprime
-time=/usr/bin/time
-wprimax=$( wprime -m )
-sp=10
-echo $sp
+The final time complexity yields: $\theta(\frac{n}{s} + s)$
 
-imax=$( expr $wprimax / $sp )
-echo -en "Number of iteration $imax.\n"
-
-for i in {1..$imax}
-	do
-	ti=0
-	for j in  {1..$sp}
-		do
-			p=$(expr $(expr $i * $sp) + $j)
-			p=$(expr $i * $sp)
-			echo $p
-			exti=$($time -f "%E" $proc $p > /dev/null)
-			ti=$(expr $ti + $exti)
-	done
-	
-	ti=$( expr $ti / $sp )
-	echo -en "$ti\n" >> hello.txtt
-done
-\end{lstlisting}
-
+\newpage
 \section{Result}
-The following section contains the result for the time complexity and space complexity achieved based on the proof section \ref{sec:proof} at page \pageref{sec:proof}. The time was done by using the GNU program \textit{time}, which is program displaying how long time the program was executing.
-However, remark that there is some uncertainty with the time when executing the tests. Because of the resolution of the time and because of the overhead from the kernel.
+The following section contains the result for the time complexity and space complexity achieved based on the proof Section \ref{sec:proof} at page \pageref{sec:proof}.
 
 % Table of result.
 \begin{table}[!h]
 \centering
 \begin{tabular}{ | l | r | c | }
 \hline
-Type & Time complexity  & Space Complexity				 						\\ \hline
-Parallel - Reduced 	& $\theta(n!)$ 				& $\frac{\theta(log())}{10}$  	\\ \hline
-Serial - Reduced 	& $\frac{\theta(n)}{10}$ 	& $\frac{\theta(1)}{10}$ 		\\ \hline
-Serial - Straight 	& $\frac{\theta(n)}{10}$ 	& $\theta(n!)$ 					\\ \hline
+Type & Time complexity  & Space Complexity				 										\\ \hline
+Parallel - Reduced 	& $\theta(\frac{n}{s} + s)$ 				& $\theta(n)$				  	\\ \hline
+Serial - Reduced 	& $\theta(n)$ 								& $\theta(log_{2^{32}}(n))$	\\ \hline
+Serial - Straight 	& $\theta(n)$ 								& $\theta(n!)$ 					\\ \hline
 \end{tabular}
 \caption{Time complexity}
 \label{tab:res}
 \end{table}
-The \emph{Straight} refers to the straight forward solution. Whereas \emph{Reduces} refers the solution.
-% Solved for any n sized p.
+The \emph{Straight} refers to the straight forward solution for solving\emph{ Wilsom's Theorem}. Whereas \emph{Reduces} refers the solution presented in this paper.
 
-%\begin{figure}[h!]
-%\centering
-%\includegraphics[width=\textwidth]{stime.png}
-%\caption{}
-%\label{}
-%\end{figure}
-%
-%\begin{figure}[h!]
-%\centering
-%\includegraphics[width=\textwidth]{ptime.png}
-%\caption{}
-%\label{}
-%\end{figure}
+%%max = 2^(n/2)  -  1
 
 %
 \section{Future work}
-Future work is to solve for bigger number. Where the number has to be emulated in software rather than using hardware instruction. This can perhaps be resolved by using a
-\textit{FPGA} for creating bigger hardware register for performing addition, multiplication and division.
+Future work is to solve for bigger number. Where the number has to be emulated in software rather than using hardware instruction. This can perhaps be resolved by using a \textit{FPGA} (Field Programmable Gate Array) for creating bigger hardware register for performing addition, multiplication and division with low latency and potential with parallel processing.
 
 \section{Pseudo Code}
 The following section covers the pseudo for implementing the \emph{Wilsom's thereom} solution for both in serial and parallel, see following sections.
 
 \subsection{Serial Computation}
-The serial computation is defined in a single function on a single thread. Where if the return value is equal to zero implies \emph{p} was a prime, otherwise non prime number.
+The serial computation is defined in a single function on a single thread. Where if the return value is equal to zero implies \emph{p} was a prime, otherwise non prime number. See following Algorithm \ref{alg:serial}.
 \begin{algorithm}[caption={Serial Computation.},label={alg:serial}]
 input: unsigned p
 begin
@@ -345,10 +309,10 @@ end
 
 \subsection{Parallel Computation}
 The parallel computation solution requires more code. However, the time complexity is much greater than the serial version for bigger numbers, see result in table \ref{tab:res} at page \pageref{tab:res}.
-The algorithm consists of two phases. First the product sequence is divided into multiple sub-product sequence. Where each sub product sequence is computed into a single number. Once the all sub-sequences has been computed.
-The product result factors is product together using the pseudo algorithm \ref{alg:serial}.
+The algorithm consists of two phases. First the product sequence is divided into multiple sub-product sequences. Where each sub-product sequence is computed into a single number. Once the all sub-sequences has been computed. The product result factors is factored together using the pseudo Algorithm \ref{alg:serial}.
 
-% Algortihm for 
+% Algortihm for
+%TODO fix
 \begin{algorithm}[caption={Wilsom's Prime - Parallel Computation.},label={alg:parallel}]
 input: unsigned p, unsigned t
 begin
