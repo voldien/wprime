@@ -86,7 +86,7 @@
 \end{titlepage}
 
 \abstract{
-\emph{Wilsom's theorem} on binary systems can be solved using the ALU on the processing units with a lower space complexity in respect to the space complexity of factorial numbers, $\O(n!)$. Furthermore, the space complexity can be reduced by using common supported instruction such as integer modular, integer multiplication and integer addition.
+\emph{Wilsom's theorem} on binary systems can be solved using the ALU on the processing units with a lower space complexity in respect to the space complexity of factorial numbers, $\O(n!)$. Furthermore, the space complexity can be reduced by using common supported instruction such as integer modular, integer multiplication, and integer addition.
 }
 \newpage
 \pagenumbering{gobble} % Turn off page numbering
@@ -97,9 +97,9 @@
 
 % 
 \section{Introduction}
-Prime number is an interesting topic in mathematics, because of its property of being difficult to determine if its a prime. This paper will provide with solutions for solving small prime by using modular arithmetic and with parallel computation. Where the solution will be done with the fixed size of the registers on the ALU hardware.
+A prime number is an interesting topic in Mathematics, because of its property of being difficult to determine if its a prime. This paper will provide solutions for solving small primes by using modular arithmetic and parallel computation. Where the solution will be done with the fixed size of the registers on the ALU hardware.
 
-This paper is about proving that \emph{modular arithmetic} can be used in order to reduce the space complexity for computing big factorial numbers on fixed sized computer registers on the ALU (Arithmetic logic unit). This paper will also prove that the \emph{"Wilson theorem"} can be subdivided into multiple factor product sequences. This can be used for solving Wilson's theorem with parallel computation, such as with \emph{GPU general computing}.
+This paper is about proving that \emph{modular arithmetic} can be used in order to reduce the space complexity for computing big factorial numbers on fixed-sized computer registers on the ALU (Arithmetic logic unit). This paper will also prove that the \emph{"Wilson theorem"} can be subdivided into multiple factor product sequences. This can be used for solving Wilson's theorem with parallel computation, such as with \emph{GPU general computing}.
 
 
 \subsection{Limitation}
@@ -107,40 +107,40 @@ This paper will only cover the mathematical proof, theorems and lemma for which 
 
 
 \subsection{Purpose}
-This research was done in order to find a faster way for determine if a number is prime with \emph{Wilsom's theorem}. Because the biggest problem with \emph{Wilsom's therorem} is that it requires to compute big factorial numbers. Where computers have fixed sized registers for storing and computing the arithmetic with the integrated ALU (Arithmetic logic unit). It would otherwise require big numbers and CPU hardware does not support this natively, which requires software emulated arithmetic operations, which would increase computation time.
+This research was done in order to find a faster way for determining if a number is prime with \emph{Wilsom's theorem}. Because the biggest problem with \emph{Wilsom's therorem} is that it requires to compute big factorial numbers. Where computers have fixed sized registers for storing and computing the arithmetic with the integrated ALU (Arithmetic logic unit). It would otherwise require big numbers and, CPU hardware does not support this natively, which requires software emulated arithmetic operations, which would increase computation time.
 
 \section{Mathematical Background}
-The following sub sections will covers the mathematical theory required in order to perform the proof at page \ref{sec:proof}. Where it will present each of the definitions, theorems and lemmas.
-%	Cover basic of prime number and its definitions.
+The following subsections will cover the mathematical theory required in order to perform the proof at page \ref{sec:proof}. Where it will present each of the definitions, theorems, and lemmas.
+%	Cover basic of a prime number and its definitions.
 
 \subsection{Prime Number}
-Because The \emph{Wilsom's Theorem} is about solving if a number is a prime. That yield that the definition of prime number is the first definition to cover, see Definition \ref{def:prime}.
+Because The \emph{Wilsom's Theorem} is about solving if a number is a prime. That yield that the definition of a prime number is the first definition to cover, see Definition \ref{def:prime}.
 
 \begin{definition}{Prime Number}\label{def:prime}
 \\
-A \emph{prime number} is a number that is only divisible by one and itself. That includes all natural numbers excluding 1 and 0. See equation \ref{equ:prime} for the subset for which a prime may exist.
+A \emph{prime number} is a number that is only divisible by one and itself. That includes all-natural numbers excluding 1 and 0. See equation \ref{equ:prime} for the subset for which a prime may exist.
 \begin{equation}
 \mathbb{N}_{p} = \{2,3,4,\cdots,n-1,n\}
 \end{equation}\label{equ:prime}
 \end{definition}
 
-The reason why \emph{one} is not a prime number is because of composite number, see following definition \ref{def:comp}.
+The reason why \emph{one} is not a prime number is because of a composite number, see following definition \ref{def:comp}.
 
 %\theoremstyle{definition}
 \begin{definition}{Composite Number}\label{def:comp}
 \\
-A composite number is a non prime number that can be expressed as a product of an unique sequence of prime factors.
+A composite number is a non-prime number that can be expressed as a product of a unique sequence of prime factors.
 \begin{equation}
 c = p_0 p_1 p_2 \cdots p_{n-1} p_{n}, c \in \mathbb{N}^{+}
 \end{equation}
 Where c is the composite number whereas $p_{i} \in \mathbb{N}_{p}$.
 \end{definition}
 
-For example, $120 = 2 \cdot 2 \cdot 3 \cdot 2 \cdot 2 \cdot 5$, $15 = 3 \cdot 5$ are both composite numbers by the definition \ref{def:comp}. Because each factor in the composite number is a prime number. However, if number one were be included, then there would exist infinitely many expression for a composite number could be expressed. Additionally, factoring one will never alters the value.
+For example, $120 = 2 \cdot 2 \cdot 3 \cdot 2 \cdot 2 \cdot 5$, $15 = 3 \cdot 5$ are both composite numbers by the definition \ref{def:comp}. Because each factor in the composite number is a prime number. However, if number one were be included, then there would exist infinitely many expressions for a composite number could be expressed. Additionally, factoring one will never alter the value.
 
 %
 \subsection{Modular Arithmetic}\label{sec:mod}
-Modular arithmetic is mathematical model for which many people has been tough in school and are using daily. However, are commonly never explicitly told about. This is associated with the clock, which many people know how to compute and use. The clock goes from $1,2,3,\cdots,11,12$ and goes back to $1$ and continues like that for all eternity. \textit{Modular arithmetic} works similar. See following definition of modular arithmetic \ref{def:modular}.
+Modular arithmetic is a mathematical model for which many people have been tough in school and are using it daily. However, are commonly never explicitly told about. This is associated with the clock, which many people know how to compute and use. The clock goes from $1,2,3,\cdots,11,12$ and goes back to $1$ and continues like that for all eternity. \textit{Modular arithmetic} works similar. See following definition of modular arithmetic \ref{def:modular}.
 
 \begin{definition}{Modular Arithmetic}\label{def:modular}
 \\
@@ -159,10 +159,10 @@ h\Mod{12} + 1, \text{where \emph{h} is the hour.}
 The adding of \emph{one} on the right side was done in order to solve the problem that $h mod 12$ alone will circle through the set $\{0,1,2,3,\cdots,10,11\}$. However, By adding one will offset to each number and yield the set $\{1,2,3,4,\cdots,11,12\}$, which the clock uses.
 
 %
-Modular arithmetic is also associated with division. Because for example $23\Mod{5}$ is the equivalence with $\frac{23}{5} + \frac{r}{5} = rqp + r$. This means that the modular arithmetic is the \emph{carry} in computer terms and the \emph{remainder} in mathematics terms, which has a signification amount of application in computer software and mathematics.
+Modular arithmetic is also associated with the division. Because for example $23\Mod{5}$ is the equivalence with $\frac{23}{5} + \frac{r}{5} = rqp + r$. This means that the modular arithmetic is the \emph{carry} in computer terms and the \emph{remainder} in mathematics terms, which has a significant amount of application in computer software and mathematics.
 
 %
-An important lemma is required for the proof to work, which is the basis for how the reduce space complexity is deduced from, see following lemma:
+An important lemma is required for the proof to work, which is the basis for how the reduced space complexity is deduced from, see the following lemma:
 \begin{lemma}{Expand Modular Factor}label{lem:modprodgen}
 \\
 if $c_0 \in \mathbb{Z}$ is composite number and $p \in \mathbb{N}^{+}$. The composite number with modular arithmetic \ref{def:modular} can be expression as followed:
@@ -180,7 +180,7 @@ c_0 \Mod{p} &= f_0 \Mod{p} \cdot f_1 \Mod{p} \cdot f_2 \Mod{p} \cdots f_{n-2} \M
 
 \begin{theorem}{Wilsom's Theorem}\label{the:wilsomprime}
 \\
-A number $\text{p} \in \mathbb{N}$ can be determine if its a prime number by using the following equation:
+A number $\text{p} \in \mathbb{N}$ can determine if its a prime number by using the following equation:
 \begin{equation}
 (p - 1)! + 1 \equiv 0\pmod p
 \end{equation}
@@ -194,13 +194,13 @@ p | (p - 1)! + 1 \implies \text{p is prime.}
 
 % Modular multiplication is assoicative
 \section{Proof}\label{sec:proof}
-The proof section contains two proofs. Where the first one is about the \emph{space complexity}, and the second for the proving that the \emph{Wilsom's theorem} can be solved in parallel.
+The proof section contains two proofs. Where the first one is about the \emph{space complexity}, and the second for proving that the \emph{Wilsom's theorem} can be solved in parallel.
 
 \subsection{Space Complexity}\label{pro:spacecomplexity}
 The following proof is about proving that \emph{modular arithmetic} \ref{sec:mod} can be used in order to subdivide the factorial expression in order to reduce the size of the number, this is because a factorial number increases in size incredibly quickly with $\theta(n!)$. The straight forward approach for solving $n$ being prime is as followed.
 
 \begin{corollary}{}
-Wilsom prime can simplified as a product of all integers from p - 1 and additions with one, based on the Lemma \ref{lem:modprodgen}.
+Wilsom prime can be simplified as a product of all integers from p - 1 and additions with one, based on the Lemma \ref{lem:modprodgen}.
 \begin{equation}\label{equ:forward}
  \left( \prod_{i = 1}^{p-1} i \right) + 1 \equiv 0 \pmod p
 \end{equation}
@@ -242,7 +242,7 @@ x\equiv (y + kz)mod z,
 
 % 
 \subsection{Parallel}
-The following proof is in regard of enabling parallel computation when solving if $n \in \mathbb{N}$ is a prime with \emph{Wilsom's Theorem} \ref{the:wilsomprime}. This is done by subdivide product into multiple sub products.
+The following proof is regarding enabling parallel computation when solving if $n \in \mathbb{N}$ is a prime with \emph{Wilsom's Theorem} \ref{the:wilsomprime}. This is done by subdividing products into multiple sub-products.
 
 \begin{equation}
 e_{1}^{1}
@@ -254,13 +254,13 @@ e_{1}^{1}
 The serial time computation is the most straight forward. Because for any $p \in{N}^+$ It will have to perform at least $p - 1$ iteration, as stated in Theorem \ref{the:wilsomprime}. This will require at least a multiple, modular operation and addition for each iteration. Thus the time complexity can be derived as $\theta(n)$.
 
 \subsubsection{Parallel}
-The parallel time computation is not as straight forward as the serial complexity. Because of the two phases in its process and an unknown variable of number of subregion. Additional subregions will increase the time complexity defined by the Serial \ref{sec:time:serial}. Because each subregions has to merge in the second phase. Furthermore, the number of subregions that be computed at the same time may vary. However with the assumption that all subregion are computed simultaneously.
+The parallel time computation is not as straight forward as the serial complexity. Because of the two phases in its process and an unknown variable of a number of subregion. Additional subregions will increase the time complexity defined by the Serial \ref{sec:time:serial}. Because each subregion has to merge in the second phase. Furthermore, the number of subregions that be computed at the same time may vary. However, with the assumption that all subregions are computed simultaneously.
 
 %
-Phase 1 time complexity yields $\frac{n}{s}$. Because each region is computed simultaneous. Additionally, $\frac{n}{s}$ is the number of elements that has to be computed with serial    on each parallel computation. Thus time complexity is $\theta(\frac{n}{s})$
+Phase 1 time complexity yields $\frac{n}{s}$. Because each region is computed simultaneously. Additionally, $\frac{n}{s}$ is the number of elements that have to be computed with serial on each parallel computation. Thus time complexity is $\theta(\frac{n}{s})$
 
 %
-Phase 2 time complexity yields to $s$ since it is the number of elements that has to be processed with the serial computation.
+Phase 2 time complexity yields to $s$ since it is the number of elements that have to be processed with the serial computation.
 
 The final time complexity yields: $\theta(\frac{n}{s} + s)$
 
@@ -281,13 +281,13 @@ Serial - Straight 	& $\theta(n)$ 								& $\theta(n!)$ 					\\ \hline
 \caption{Time complexity}
 \label{tab:res}
 \end{table}
-The \emph{Straight} refers to the straight forward solution for solving\emph{ Wilsom's Theorem}. Whereas \emph{Reduces} refers the solution presented in this paper.
+The \emph{Straight} refers to the straight forward solution for solving\emph{ Wilsom's Theorem}. Whereas \emph{Reduces} refers to the solution presented in this paper.
 
 %%max = 2^(n/2)  -  1
 
 %
 \section{Future work}
-Future work is to solve for bigger number. Where the number has to be emulated in software rather than using hardware instruction. This can perhaps be resolved by using a \textit{FPGA} (Field Programmable Gate Array) for creating bigger hardware register for performing addition, multiplication and division with low latency and potential with parallel processing.
+Future work is to solve for bigger numbers. Where the number has to be emulated in software rather than using hardware instruction. This can perhaps be resolved by using a \textit{FPGA} (Field Programmable Gate Array) for creating bigger hardware register for performing addition, multiplication, and division with low latency and potential with parallel processing.
 
 \section{Pseudo Code}
 The following section covers the pseudo for implementing the \emph{Wilsom's thereom} solution for both in serial and parallel, see following sections.
@@ -308,10 +308,10 @@ end
 \end{algorithm}
 
 \subsection{Parallel Computation}
-The parallel computation solution requires more code. However, the time complexity is much greater than the serial version for bigger numbers, see result in table \ref{tab:res} at page \pageref{tab:res}.
-The algorithm consists of two phases. First the product sequence is divided into multiple sub-product sequences. Where each sub-product sequence is computed into a single number. Once the all sub-sequences has been computed. The product result factors is factored together using the pseudo Algorithm \ref{alg:serial}.
+The parallel computation solution requires more code. However, the time complexity is much greater than the serial version for bigger numbers, see the result in table \ref{tab:res} at page \pageref{tab:res}.
+The algorithm consists of two phases. First, the product sequence is divided into multiple sub-product sequences. Next, each sub-product sequence is computed into a single number. Finally, once all sub-sequences have been computed. The product result factors are factored together using the pseudo Algorithm \ref{alg:serial}.
 
-% Algortihm for
+% Algorithm for
 %TODO fix
 \begin{algorithm}[caption={Wilsom's Prime - Parallel Computation.},label={alg:parallel}]
 input: unsigned p, unsigned t
