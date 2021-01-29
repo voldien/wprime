@@ -58,7 +58,7 @@
         keywords={,input, output, return, datatype, function, in, if, else, foreach, while, begin, end, } %add the keywords you want, or load a language as Rubens explains in his comment above.
         numbers=left,
         xleftmargin=.04\textwidth,
-        #1 % this is to add specific settings to an usage of this environment (for instnce, the caption and referable label)
+        #1 % this is to add specific settings to an usage of this environment (for instance, the caption and referable label)
     }
 }
 {}
@@ -74,7 +74,7 @@
 	\hspace{0.05\textwidth} % Whitespace between the vertical line and title page text
 	\parbox[b]{0.75\textwidth}{ % Paragraph box for holding the title page text, adjust the width to move the title page left or right on the page
 		
-		{\Huge\bfseries WPrime Space Complexity\\  Reduction}\\[2\baselineskip] % Title
+		{\Huge\bfseries Wilsom Prime Space Complexity Reduction}\\[2\baselineskip] % Title
 		{\large\textit{Mathematical Proof for solving wprime with lower space complexity}}\\[4\baselineskip] % Subtitle or further description
 		{\Large\textsc{Valdemar Lindberg}} % Author name, lower case for consistent small caps
 		
@@ -86,7 +86,7 @@
 \end{titlepage}
 
 \abstract{
-\emph{Wilsom's theorem} on binary systems can be solved using the ALU on the processing units with a lower space complexity in respect to the space complexity of factorial numbers, $\O(n!)$. Furthermore, the space complexity can be reduced by using common supported instruction such as integer modular, integer multiplication, and integer addition.
+\emph{Wilsom's theorem} on binary systems can be solved using the ALU on the processing units with a lower space complexity in respect to the space complexity required for computing factorial products with space complexity of $\O(n!)$. However, the space complexity can be reduced by using common supported instruction on processing units such as integer remainder, integer multiplication, and integer addition that will yield a space complexity of $\O(n)$ and $\O(log_{2^32}(n))$.
 }
 \newpage
 \pagenumbering{gobble} % Turn off page numbering
@@ -97,9 +97,9 @@
 
 % 
 \section{Introduction}
-A prime number is an interesting topic in Mathematics, because of its property of being difficult to determine if its a prime. This paper will provide solutions for solving small primes by using modular arithmetic and parallel computation. Where the solution will be done with the fixed size of the registers on the ALU hardware.
+A prime number is an interesting topic in mathematics because of many of its properties. However, one of the challenges is to determine if an integer is prime. This paper will provide solutions for solving small primes by using both serial and parallel computation. This solution will be done with the fixed size of the registers on the ALU hardware. However, this technique can very easily be expanded by using large numbers, emulated in software.
 
-This paper is about proving that \emph{modular arithmetic} can be used in order to reduce the space complexity for computing big factorial numbers on fixed-sized computer registers on the ALU (Arithmetic logic unit). This paper will also prove that the \emph{"Wilson theorem"} can be subdivided into multiple factor product sequences. This can be used for solving Wilson's theorem with parallel computation, such as with \emph{GPU general computing}.
+This paper is about proving that \emph{modular arithmetic} can be used for reducing the space complexity for computing big factorial numbers on fixed-sized computer registers on the ALU (Arithmetic logic unit). This paper will also prove that the \emph{"Wilson theorem"} can by subdividing it into multiple factor product sequences. This can be used for solving Wilson's theorem with parallel computation, such as with \emph{GPU general computing}.
 
 
 \subsection{Limitation}
@@ -107,10 +107,10 @@ This paper will only cover the mathematical proof, theorems and lemma for which 
 
 
 \subsection{Purpose}
-This research was done in order to find a faster way for determining if a number is prime with \emph{Wilsom's theorem}. Because the biggest problem with \emph{Wilsom's therorem} is that it requires to compute big factorial numbers. Where computers have fixed sized registers for storing and computing the arithmetic with the integrated ALU (Arithmetic logic unit). It would otherwise require big numbers and, CPU hardware does not support this natively, which requires software emulated arithmetic operations, which would increase computation time.
+This research was done in order to find a faster way for determining if a number is prime with \emph{Wilsom's theorem}. Because the biggest problem with \emph{Wilsom's therorem} is that it requires to compute big factorial numbers. Where computers have fixed sized registers for storing and computing the arithmetic with the integrated ALU (Arithmetic logic unit). This would otherwise require big numbers and, CPU hardware does not support this natively, which requires software emulated arithmetic operations, which would increase computation time.
 
 \section{Mathematical Background}
-The following subsections will cover the mathematical theory required in order to perform the proof at page \ref{sec:proof}. Where it will present each of the definitions, theorems, and lemmas.
+The following subsections will cover the mathematical theory required in order to perform the proof at page \ref{sec:proof} that will present each of the definitions, theorems, and lemmas.
 %	Cover basic of a prime number and its definitions.
 
 \subsection{Prime Number}
@@ -140,7 +140,7 @@ For example, $120 = 2 \cdot 2 \cdot 3 \cdot 2 \cdot 2 \cdot 5$, $15 = 3 \cdot 5$
 
 %
 \subsection{Modular Arithmetic}\label{sec:mod}
-Modular arithmetic is a mathematical model for which many people have been tough in school and are using it daily. However, are commonly never explicitly told about. This is associated with the clock, which many people know how to compute and use. The clock goes from $1,2,3,\cdots,11,12$ and goes back to $1$ and continues like that for all eternity. \textit{Modular arithmetic} works similar. See following definition of modular arithmetic \ref{def:modular}.
+Modular arithmetic is a mathematical model for which many people have been tough in school and are using it daily. However, are commonly never explicitly informed about because is associated with the how a clock works, which many people know how to compute and use. The clock goes from $1,2,3,\cdots,11,12$ and goes back to $1$ and continues like that for all eternity. \textit{Modular arithmetic} works similar. See following definition of modular arithmetic \ref{def:modular}.
 
 \begin{definition}{Modular Arithmetic}\label{def:modular}
 \\
@@ -159,10 +159,10 @@ h\Mod{12} + 1, \text{where \emph{h} is the hour.}
 The adding of \emph{one} on the right side was done in order to solve the problem that $h mod 12$ alone will circle through the set $\{0,1,2,3,\cdots,10,11\}$. However, By adding one will offset to each number and yield the set $\{1,2,3,4,\cdots,11,12\}$, which the clock uses.
 
 %
-Modular arithmetic is also associated with the division. Because for example $23\Mod{5}$ is the equivalence with $\frac{23}{5} + \frac{r}{5} = rqp + r$. This means that the modular arithmetic is the \emph{carry} in computer terms and the \emph{remainder} in mathematics terms, which has a significant amount of application in computer software and mathematics.
+Modular arithmetic is also associated with the division. Because, for instance, $23\Mod{5}$ is the equivalence with $\frac{23}{5} + \frac{r}{5} = rqp + r$. This means that the modular arithmetic is the \emph{carry} in computer terms and the \emph{remainder} in mathematics terms, that has a significant amount of application in both computer softwares and mathematics.
 
 %
-An important lemma is required for the proof to work, which is the basis for how the reduced space complexity is deduced from, see the following lemma:
+An important lemma is required for the proof to work, which is the basis for how the reduced space complexity is deduced from, see the following Lemma:
 \begin{lemma}{Expand Modular Factor}label{lem:modprodgen}
 \\
 if $c_0 \in \mathbb{Z}$ is composite number and $p \in \mathbb{N}^{+}$. The composite number with modular arithmetic \ref{def:modular} can be expression as followed:
@@ -192,7 +192,7 @@ By the theorem in \ref{the:wilsomprime}, this would mean that $(p-1)! + 1 $ \emp
 p | (p - 1)! + 1 \implies \text{p is prime.}
 \end{equation}
 
-% Modular multiplication is assoicative
+% Modular multiplication is associative
 \section{Proof}\label{sec:proof}
 The proof section contains two proofs. Where the first one is about the \emph{space complexity}, and the second for proving that the \emph{Wilsom's theorem} can be solved in parallel.
 
@@ -200,7 +200,7 @@ The proof section contains two proofs. Where the first one is about the \emph{sp
 The following proof is about proving that \emph{modular arithmetic} \ref{sec:mod} can be used in order to subdivide the factorial expression in order to reduce the size of the number, this is because a factorial number increases in size incredibly quickly with $\theta(n!)$. The straight forward approach for solving $n$ being prime is as followed.
 
 \begin{corollary}{}
-Wilsom prime can be simplified as a product of all integers from p - 1 and additions with one, based on the Lemma \ref{lem:modprodgen}.
+Wilsom prime can be simplified as a product of all integers from $p - 1$ and additions with one, based on Lemma \ref{lem:modprodgen}.
 \begin{equation}\label{equ:forward}
  \left( \prod_{i = 1}^{p-1} i \right) + 1 \equiv 0 \pmod p
 \end{equation}
@@ -208,7 +208,7 @@ Wilsom prime can be simplified as a product of all integers from p - 1 and addit
 \end{corollary}
 
 
-% TODO relocate to rationale
+% TODO relocate to the rationale
 This equation has the problem that the product will increase in size rapidly. This becomes a problem for most CPU (central computation unit), because the registers responsible for storing storing the values as a binary representation of the whole numbers. Because as of the time of this paper CPU's has support for \emph{ALU}(Arithmetic logic unit) for up to 128 bit numbers. That is say $10^{38}$. However this register would been been overflowed, using equation \ref{equ:forward} before $p$ reaches $36$. That implies it would only be able to solve for $p < 35$.
 
 \begin{proof}
@@ -242,7 +242,7 @@ x\equiv (y + kz)mod z,
 
 % 
 \subsection{Parallel}
-The following proof is regarding enabling parallel computation when solving if $n \in \mathbb{N}$ is a prime with \emph{Wilsom's Theorem} \ref{the:wilsomprime}. This is done by subdividing products into multiple sub-products.
+The following proof is regarding enabling parallel computation when solving if $n \in \mathbb{N}$ is prime with \emph{Wilsom's Theorem} \ref{the:wilsomprime}. This is done by subdividing products into multiple sub-products.
 
 \begin{equation}
 e_{1}^{1}
@@ -254,10 +254,10 @@ e_{1}^{1}
 The serial time computation is the most straight forward. Because for any $p \in{N}^+$ It will have to perform at least $p - 1$ iteration, as stated in Theorem \ref{the:wilsomprime}. This will require at least a multiple, modular operation and addition for each iteration. Thus the time complexity can be derived as $\theta(n)$.
 
 \subsubsection{Parallel}
-The parallel time computation is not as straight forward as the serial complexity. Because of the two phases in its process and an unknown variable of a number of subregion. Additional subregions will increase the time complexity defined by the Serial \ref{sec:time:serial}. Because each subregion has to merge in the second phase. Furthermore, the number of subregions that be computed at the same time may vary. However, with the assumption that all subregions are computed simultaneously.
+The parallel time computation is not as straight forward as the serial complexity. Because of the two phases in its process and an unknown variable of a number of the subregion. Additional subregions will increase the time complexity defined by the Serial \ref{sec:time:serial}. Because each subregion has to merge in the second phase. Furthermore, the number of subregions that be computed at the same time may vary. However, with the assumption that all subregions are computed simultaneously.
 
 %
-Phase 1 time complexity yields $\frac{n}{s}$. Because each region is computed simultaneously. Additionally, $\frac{n}{s}$ is the number of elements that have to be computed with serial on each parallel computation. Thus time complexity is $\theta(\frac{n}{s})$
+Phase 1 time complexity yields $\frac{n}{s}$ because each region are computed simultaneously. Additionally, $\frac{n}{s}$ is the number of elements that have to be computed with serial on each parallel computation. Thus time complexity is $\theta(\frac{n}{s})$
 
 %
 Phase 2 time complexity yields to $s$ since it is the number of elements that have to be processed with the serial computation.
@@ -293,7 +293,7 @@ Future work is to solve for bigger numbers. Where the number has to be emulated 
 The following section covers the pseudo for implementing the \emph{Wilsom's thereom} solution for both in serial and parallel, see following sections.
 
 \subsection{Serial Computation}
-The serial computation is defined in a single function on a single thread. Where if the return value is equal to zero implies \emph{p} was a prime, otherwise non prime number. See following Algorithm \ref{alg:serial}.
+The serial computation is defined in a single function on a single thread. Where if the return value is equal to zero implies \emph{p} was a prime, otherwise non-prime number. See following Algorithm \ref{alg:serial}.
 \begin{algorithm}[caption={Serial Computation.},label={alg:serial}]
 input: unsigned p
 begin
@@ -308,8 +308,8 @@ end
 \end{algorithm}
 
 \subsection{Parallel Computation}
-The parallel computation solution requires more code. However, the time complexity is much greater than the serial version for bigger numbers, see the result in table \ref{tab:res} at page \pageref{tab:res}.
-The algorithm consists of two phases. First, the product sequence is divided into multiple sub-product sequences. Next, each sub-product sequence is computed into a single number. Finally, once all sub-sequences have been computed. The product result factors are factored together using the pseudo Algorithm \ref{alg:serial}.
+The parallel computation solution requires additional code. However, the time complexity is much greater than the serial version for bigger numbers, see the result in table \ref{tab:res} at page \pageref{tab:res}.
+The algorithm consists of two phases. First, the factor sequence is divided into multiple sub-product sequences. Next, each sub-factor sequence is computed individually into a single product. Finally, once all sub-sequences products have been computed. The final product is computed by multiply all the sub-products by using the pseudo Algorithm \ref{alg:serial}.
 
 % Algorithm for
 %TODO fix
