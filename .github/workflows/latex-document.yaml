@@ -15,7 +15,7 @@ jobs:
 
       - name: Move PDF file
         working-directory: $GITHUB_WORKSPACE/doc
-        run: mv -v proof.deb Wilsom-Prime-Time-Space-Complexity-Reduction.pdf 
+        run: mv -v proof.pdf Wilsom-Prime-Time-Space-Complexity-Reduction.pdf 
 
       - name: Upload Documents
         uses: actions/upload-artifact@v2
