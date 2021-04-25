@@ -1,0 +1,18 @@
+name: Build LaTeX document
+on: [push]
+jobs:
+  build_latex:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: proof.tex
+          latexmk_use_lualatex: true
+          working_directory: ${{runner.worshop}}/doc
+      - uses: actions/upload-artifact@v2
+        with:
+          name: Upload Document
+          path: Wilsom-Prime-Time-Space-Complexity-Reduction.pdf
