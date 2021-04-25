@@ -12,7 +12,13 @@ jobs:
           root_file: proof.tex
           latexmk_use_lualatex: true
           working_directory: doc
-      - uses: actions/upload-artifact@v2
-        with:
-          name: Upload Document
-          path: Wilsom-Prime-Time-Space-Complexity-Reduction.pdf
+
+    - name: Move PDF file
+      working-directory: $GITHUB_WORKSPACE/doc
+      run: mv -v proof.deb Wilsom-Prime-Time-Space-Complexity-Reduction.pdf 
+
+    - name: Upload deb packages
+      uses: actions/upload-artifact@v2
+      with:
+          name: Latex-Documents
+          path: $GITHUB_WORKSPACE/doc/Wilsom-Prime-Time-Space-Complexity-Reduction.pdf
