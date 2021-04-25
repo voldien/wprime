@@ -11,7 +11,7 @@ jobs:
         with:
           root_file: proof.tex
           latexmk_use_lualatex: true
-          working_directory: ${{runner.worshop}}/doc
+          working_directory: ${{runner.workspace}}/doc
       - uses: actions/upload-artifact@v2
         with:
           name: Upload Document
