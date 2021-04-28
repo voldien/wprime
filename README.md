@@ -1,5 +1,3 @@
-# WPRIME
-
 ## wprime
 
 wprime is an application for solving if n member of natural number is a prime, by utilizing the wilson's theorem.
@@ -50,7 +48,7 @@ echo '13' | clwprime
 
 ## Dependencies
 
-----------------
+
 In order to compile the clwprime program, the following Debian packages has to be installed.
 
 ```bash
