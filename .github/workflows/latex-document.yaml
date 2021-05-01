@@ -14,11 +14,11 @@ jobs:
           working_directory: doc
 
       - name: Move PDF file
-        working-directory: $GITHUB_WORKSPACE/doc
+        working-directory: doc
         run: mv -v proof.pdf Wilsom-Prime-Time-Space-Complexity-Reduction.pdf 
 
       - name: Upload Documents
         uses: actions/upload-artifact@v2
         with:
             name: Latex-Documents
-            path: $GITHUB_WORKSPACE/doc/Wilsom-Prime-Time-Space-Complexity-Reduction.pdf
+            path: doc/Wilsom-Prime-Time-Space-Complexity-Reduction.pdf
