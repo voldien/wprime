@@ -105,6 +105,7 @@ int main(int argc, char **argv) {
 	}
 
 	/*	read from argument without flag.	*/
+	tmp = 0;
 	if (optind < argc) {
 		tmp = strtoll(argv[optind], NULL, base);
 	} else {

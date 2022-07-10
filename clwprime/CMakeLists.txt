@@ -1,0 +1,18 @@
+FIND_PACKAGE(OpenCL QUIET)
+
+IF(OpenCL_FOUND)
+    MESSAGE(STATUS "OpenCL: ${OpenCL_LIBRARY}")
+
+    # Add execute and link library.
+    ADD_EXECUTABLE(clwprime ${CMAKE_CURRENT_SOURCE_DIR}/clwprime.c)
+    TARGET_LINK_LIBRARIES(clwprime ${OpenCL_LIBRARIES})
+
+    TARGET_INCLUDE_DIRECTORIES(clwprime PRIVATE ${OpenCL_INCLUDE_DIRS})
+    SET_TARGET_PROPERTIES(clwprime PROPERTIES COMPILE_FLAGS "-DCL_TARGET_OPENCL_VERSION=120")
+
+    ADD_DEFINITIONS(-DWPRIME_SOURCEPATH="/usr/local/share/clwprime/wprime.cl")
+
+    # Install program.
+    INSTALL(TARGETS clwprime DESTINATION bin)
+    INSTALL(FILES ${CMAKE_CURRENT_SOURCE_DIR}/wprime.cl DESTINATION share/clwprime)
+ENDIF()
